@@ -1,0 +1,20 @@
+{
+  "name": "harry-lleen/debian-11",
+  "description": "Debian 11 arm64 pour VirtualBox (Apple Silicon)",
+  "versions": [
+    {
+      "version": "11.11.0",
+      "status": "active",
+      "providers": [
+        {
+          "name": "virtualbox",
+          "architecture": "arm64",
+          "default_architecture": true,
+          "url": "https://github.com/harry-lleen/debian-boxes/releases/download/debian-11-v11.11.0/debian-11-arm64-11.11.0.virtualbox.box",
+          "checksum_type": "sha256",
+          "checksum": "b1bea39b02f4092e167ac03bd7e99ea77a11efda9439532732c400827472ef0b"
+        }
+      ]
+    }
+  ]
+}

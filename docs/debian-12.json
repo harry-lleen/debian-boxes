@@ -1,0 +1,20 @@
+{
+  "name": "harry-lleen/debian-12",
+  "description": "Debian 12 arm64 pour VirtualBox (Apple Silicon)",
+  "versions": [
+    {
+      "version": "12.15.0",
+      "status": "active",
+      "providers": [
+        {
+          "name": "virtualbox",
+          "architecture": "arm64",
+          "default_architecture": true,
+          "url": "https://github.com/harry-lleen/debian-boxes/releases/download/debian-12-v12.15.0/debian-12-arm64-12.15.0.virtualbox.box",
+          "checksum_type": "sha256",
+          "checksum": "29f006eaa1b5199c858b8169d6ed0ec997a020bd0981db1254a86860fa964655"
+        }
+      ]
+    }
+  ]
+}

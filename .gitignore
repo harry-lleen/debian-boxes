@@ -1,0 +1,7 @@
+output/
+build/
+packer_cache/
+.vagrant/
+crash.log
+*.log
+.DS_Store

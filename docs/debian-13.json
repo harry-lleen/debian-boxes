@@ -1,0 +1,20 @@
+{
+  "name": "harry-lleen/debian-13",
+  "description": "Debian 13 arm64 pour VirtualBox (Apple Silicon)",
+  "versions": [
+    {
+      "version": "13.7.0",
+      "status": "active",
+      "providers": [
+        {
+          "name": "virtualbox",
+          "architecture": "arm64",
+          "default_architecture": true,
+          "url": "https://github.com/harry-lleen/debian-boxes/releases/download/debian-13-v13.7.0/debian-13-arm64-13.7.0.virtualbox.box",
+          "checksum_type": "sha256",
+          "checksum": "0261c582f9b56c7291a0be5d15fcad1ed943b8b0f9b55f077c855b9988d97dd5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+debian_version = "11.11.0"
+iso_url        = "https://cdimage.debian.org/cdimage/archive/11.11.0/arm64/iso-cd/debian-11.11.0-arm64-netinst.iso"
+iso_checksum   = "sha256:c81b6081d5dc5cfac49310b104eb9843252fd3c97cedbcd69ec0388798e7ef7e"
+mirror         = "archive.debian.org"
+security_host  = "archive.debian.org"

@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Serveur virtuel LAMP pour IRDW
+  config.vm.define "srv-irdw" do |machine|
+    machine.vm.hostname = "srv-irdw"
+    machine.vm.box = "harry-lleen/debian-13"
+    machine.vm.box_url = "https://harry-lleen.github.io/debian-boxes/debian-13.json"
+    machine.vm.network :private_network, ip: "192.168.56.80"
+    #machine.vm.synced_folder "./data", "/vagrant_data"
+    machine.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--name", "srv-irdw"]
+      v.customize ["modifyvm", :id, "--groups", "/S6-irdw"]
+      v.customize ["modifyvm", :id, "--cpus", "2"]
+      v.customize ["modifyvm", :id, "--memory", 2048]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+    machine.vm.provision "shell", path: "scripts/install_sys.sh"
+    machine.vm.provision "shell", path: "scripts/install_web.sh"
+    machine.vm.provision "shell", path: "scripts/install_mariadb.sh"
+    machine.vm.provision "shell", path: "scripts/config_bdd.sh"
+    machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
+    machine.vm.provision "shell", path: "scripts/minimize.sh"
+  end
+end
