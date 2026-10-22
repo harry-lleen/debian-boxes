@@ -5,8 +5,9 @@ VERSION=${1:?version manquante, ex. ./export-ova.sh 1.0.0}
 VM=srv-irdw
 OVA=build/$VM-debian13-arm64-$VERSION.ova
 
-# Retire l'utilisateur vagrant (mot de passe vagrant, sudo sans mot de passe)
-# puis éteint la VM ; différé de 2 s pour que la session SSH de Vagrant se termine
+vagrant ssh -c '[ "$(ls /lib/modules | wc -l)" -eq 1 ]' || { echo "Plusieurs noyaux : reconstruire la box d'abord"; exit 1; }
+
+# Retire l'utilisateur vagrant, puis éteint la VM
 vagrant ssh -c 'sudo systemd-run --on-active=2 /bin/sh -c "pkill -KILL -u vagrant; userdel -r vagrant; rm -f /etc/sudoers.d/vagrant; poweroff"'
 until VBoxManage showvminfo $VM --machinereadable | grep -q '^VMState="poweroff"'; do sleep 2; done
 

@@ -12,7 +12,7 @@
           "default_architecture": true,
           "url": "https://github.com/harry-lleen/debian-boxes/releases/download/debian-13-v13.7.0/debian-13-arm64-13.7.0.virtualbox.box",
           "checksum_type": "sha256",
-          "checksum": "0261c582f9b56c7291a0be5d15fcad1ed943b8b0f9b55f077c855b9988d97dd5"
+          "checksum": "3d4f99ff624e9cd58bc2dd41a20031251d1251846ad8a8ff8faab0e84b572453"
         }
       ]
     }
