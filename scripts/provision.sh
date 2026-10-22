@@ -1,6 +1,5 @@
 #!/bin/sh -eux
 # Configuration de la box et nettoyage.
-# Lancement en root par Packer.
 export DEBIAN_FRONTEND=noninteractive
 
 # Vagrant : clés insecure (ed25519 + rsa), remplacées par Vagrant au premier up.
@@ -19,7 +18,7 @@ update-grub
 # Chemin EFI de secours (\EFI\BOOT\BOOTAA64.EFI).
 grub-install --target=arm64-efi --efi-directory=/boot/efi --removable
 
-# Verrou apt pendant le provisioning.
+# Pas de mises à jour apt automatiques (elles verrouillent apt).
 systemctl disable --now apt-daily.timer apt-daily-upgrade.timer
 
 # Guest Additions VirtualBox.
@@ -27,7 +26,7 @@ apt-get install -y build-essential dkms linux-headers-"$(uname -r)"
 mkdir -p /mnt/vbox
 mount -o loop,ro /tmp/VBoxGuestAdditions.iso /mnt/vbox
 /mnt/vbox/VBoxLinuxAdditions-arm64.run --nox11 || true
-# Noyau 5.10 (Debian 11) : TASK_SIZE_MAX n'existe pas encore sur arm64, vboxsf ne compile pas.
+# Noyau 5.10 (Debian 11) : TASK_SIZE_MAX n'existe pas sur arm64, vboxsf ne compile pas.
 modinfo vboxsf >/dev/null 2>&1 || KCFLAGS=-DTASK_SIZE_MAX=TASK_SIZE_64 /sbin/rcvboxadd quicksetup all
 umount /mnt/vbox
 rm -rf /mnt/vbox /tmp/VBoxGuestAdditions.iso

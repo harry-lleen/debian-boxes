@@ -14,12 +14,13 @@ export DEBIAN_FRONTEND=noninteractive
 echo "START - install Server - "$IP
 
 echo "=> [1]: Installing required packages..."
+# Ajout de contrib et non-free pour les depots
+sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 apt-get update $APT_OPT \
   >> $LOG_FILE 2>&1
 
 apt-get install $APT_OPT \
   wget \
-  gnupg \
   unzip \
   >> $LOG_FILE 2>&1
 
@@ -31,8 +32,6 @@ apt-get install $APT_OPT \
   >> $LOG_FILE 2>&1
 
 echo "=> [2]: Server configuration"
-# Ajout de contrib et non-free pour les depots
-sed -i 's/main/main contrib non-free/g' /etc/apt/sources.list
 # Ajout de la ligne pour le proxy ESEO mais descativé
 echo "#Acquire::http::Proxy \"http://scully.eseo.fr:9999\";" >> /etc/apt/apt.conf
 # Pour avoir le clavier en français dans la console VB

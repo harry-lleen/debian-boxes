@@ -2,18 +2,17 @@
 
 Les fichiers pour la mise en place de la VM Virtualbox pour le module PWND du semestre 6
 
+> Vagrantfile et scripts de Jérôme Chavin-Gazalier ([@chavinje](https://github.com/chavinje)), adaptés pour Mac Apple Silicon.
+
 ## Les pré-requis
 
 ### Les ressources informatiques
 
 Pour faire fonctionner ce Labs il faut prévoir au moins 2 CPU /coeurs et 4Go de Ram (8Go est plus judicieux). L'espace disque est de l'ordre des 8 Go.
-La virtualisation doit être activée sur le PC hôte (machine physique )
-<https://support.bluestacks.com/hc/fr-fr/articles/115003174386-Comment-puis-je-activer-la-virtualisation-VT-sur-mon-PC->
 
 ### Les applications obligatoires
 
 * Oracle Virtualbox (<https://www.virtualbox.org/wiki/Downloads>)
-* Oracle VM VirtualBox Extension Pack (adapté à la version de virtualbox installée précédement)
 * HashiCorp Vagrant (<https://www.vagrantup.com/>)
 
 ### Les fichiers obligatoires
@@ -25,13 +24,14 @@ Vous trouverez les reperoires/fichiers :
 
 * ./Vagrantfile : qui contient l'ensemble des déclarations pour la construction du Labs
 * scripts/install_sys.sh : mise en place des configurations de base sur toutes les VMs
-* scripts/install_bdd.sh : Mise en place de la base de données mysql
+* scripts/install_mariadb.sh : Mise en place de la base de données MariaDB
+* scripts/config_bdd.sh : Création de la base à partir de files/creation_bdd_irdw.sql
 * scripts/install_myadmin.sh : Mise en place de l'application PhpMyAdmin
 * scripts/install_web.sh : Mise en place du serveur Apache2
 
 ## Description du Labs
 
-Le labs est constitué de 1 machine virtuelle Virtualbox basé sur la box fr-book-64 (Debian 12 - AMD64)
+Le labs est constitué de 1 machine virtuelle Virtualbox basé sur la box harry-lleen/debian-13 (Debian 13 - arm64)
 Cette machine est reliée à votre machine réelle par un réseau privé hôte via l'adresse 192.168.56.80
 La base de données MariaDB est accèssible depuis l'hôte.
 
@@ -40,18 +40,18 @@ La base de données MariaDB est accèssible depuis l'hôte.
 ## Utilisation des commandes vagrant
 
 Télécharger la box modèle
-    ```vagrant box add chavinje/fr-book-64```
+    ```vagrant box add https://harry-lleen.github.io/debian-boxes/debian-13.json```
 
-Activer une VM uniquement (srv-web par exemple)
-    ```vagrant up srv-web```
+Activer la VM
+    ```vagrant up srv-irdw```
 
-Se connecter à une VM (firewall par exemple)
-    ```vagrant ssh firewall```
+Se connecter à la VM
+    ```vagrant ssh srv-irdw```
 
-Arréter une VM (victime par exemple)
-    ```vagrant halt victime```
+Arréter la VM
+    ```vagrant halt srv-irdw```
 
-Détruire toutes les VMs (sans demande de confirmation)
+Détruire la VM (sans demande de confirmation)
     ```vagrant destroy -f```
 
 ## Utiliser l'OVA (Mac Apple Silicon)
@@ -67,6 +67,7 @@ La box fr-book-64 n'existe qu'en amd64 : sur un Mac Apple Silicon, on utilise l'
 Fabriquer l'OVA (sur un Mac Apple Silicon avec Vagrant) :
 
     vagrant up
+    ./test.sh
     ./export-ova.sh 1.0.0
 
 `export-ova.sh` supprime l'utilisateur vagrant et le dossier partagé, puis écrit l'OVA et son sha256 dans `build/`. Supprimer ensuite la VM avec `vagrant destroy -f`.

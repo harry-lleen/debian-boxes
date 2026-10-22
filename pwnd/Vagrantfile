@@ -10,18 +10,18 @@ Vagrant.configure("2") do |config|
     machine.vm.network :private_network, ip: "192.168.56.80"
     #machine.vm.synced_folder "./data", "/vagrant_data"
     machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--name", "srv-irdw"]
+      v.name = "srv-irdw"
+      v.cpus = 2
+      v.memory = 2048
       v.customize ["modifyvm", :id, "--groups", "/S6-irdw"]
-      v.customize ["modifyvm", :id, "--cpus", "2"]
-      v.customize ["modifyvm", :id, "--memory", 2048]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      v.customize ["modifyvm", :id, "--nat-dns-host-resolver1", "on"]
+      v.customize ["modifyvm", :id, "--nat-dns-proxy1", "on"]
     end
     machine.vm.provision "shell", path: "scripts/install_sys.sh"
     machine.vm.provision "shell", path: "scripts/install_web.sh"
     machine.vm.provision "shell", path: "scripts/install_mariadb.sh"
     machine.vm.provision "shell", path: "scripts/config_bdd.sh"
     machine.vm.provision "shell", path: "scripts/install_myadmin.sh"
-    machine.vm.provision "shell", path: "scripts/minimize.sh"
+    machine.vm.provision "shell", path: "../scripts/minimize.sh"
   end
 end

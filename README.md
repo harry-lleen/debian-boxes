@@ -60,7 +60,7 @@ vagrant box add --name test/debian-13 build/debian-13-arm64-13.7.0.virtualbox.bo
 | `debian-XX.pkrvars.hcl` | ISO et checksum de chaque version |
 | `http/preseed.cfg` | Réponses de l'installateur Debian |
 | `scripts/provision.sh` | Configuration, Guest Additions, nettoyage |
-| `scripts/minimize.sh` | Remplit l'espace libre de zéros pour que la compression |
+| `scripts/minimize.sh` | Remplit l'espace libre de zéros pour mieux compresser la box |
 | `publish.sh` | Release GitHub et mise à jour du catalogue |
 
 Template adapté de [chef/bento](https://github.com/chef/bento) (Apache-2.0).
@@ -68,3 +68,5 @@ Template adapté de [chef/bento](https://github.com/chef/bento) (Apache-2.0).
 ## OVA du cours IRDW (projet PWND)
 
 Le dossier [`pwnd/`](pwnd/) est destiné à la création d'une VM préconfigurée (Apache, PHP, MariaDB, phpMyAdmin) basée sur la box `harry-lleen/debian-13`, puis exporte la VM en OVA. L'OVA est publié dans les releases `pwnd-v*`.
+
+Vagrantfile et scripts de Jérôme Chavin-Gazalier ([@chavinje](https://github.com/chavinje)), adaptés pour Mac Apple Silicon.

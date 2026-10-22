@@ -1,5 +1,5 @@
 #!/bin/sh -eux
-# Remplit l'espace libre de zéros pour aider l'export VMDK.
+# Remplit l'espace libre de zéros pour mieux compresser la box.
 
 for fs in $(df --output=target -t ext4 | tail -n +2); do
   dd if=/dev/zero of="$fs/.zero" bs=1M status=none || true  # s'arrête sur « disque plein », c'est voulu

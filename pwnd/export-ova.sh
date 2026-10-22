@@ -15,4 +15,3 @@ VBoxManage sharedfolder remove $VM --name vagrant || true
 mkdir -p build
 VBoxManage export $VM -o "$OVA" --manifest
 shasum -a 256 "$OVA" > "$OVA.sha256"
-# La VM n'a plus d'utilisateur vagrant : la supprimer ensuite avec `vagrant destroy -f`

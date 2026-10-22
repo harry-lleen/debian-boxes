@@ -1,13 +1,7 @@
 #!/bin/sh -eu
-# Publie une box sur GitHub Releases et l'ajoute au catalogue Vagrant docs/debian-<majeure>.json
-# Servi par GitHub Pages (Content-Type application/json compatible Vagrant).
-#
+# Publie une box sur GitHub Releases et l'ajoute au catalogue docs/debian-<majeure>.json (GitHub Pages).
 #   ./publish.sh build/debian-13-arm64-13.7.0.virtualbox.box
-#
-# Mise à jour du catalogue.
-
-REPO="${REPO:?REPO=propriétaire/dépôt GitHub}"
-NAMESPACE="${NAMESPACE:-harry-lleen}"
+REPO=harry-lleen/debian-boxes
 
 box="$1"
 file=$(basename "$box")
@@ -21,7 +15,7 @@ gh release view "$tag" --repo "$REPO" >/dev/null 2>&1 ||
 gh release upload "$tag" "$box" --repo "$REPO" --clobber
 
 mkdir -p docs
-python3 - "docs/debian-$major.json" "$NAMESPACE/debian-$major" "$version" \
+python3 - "docs/debian-$major.json" "harry-lleen/debian-$major" "$version" \
   "https://github.com/$REPO/releases/download/$tag/$file" "$sha" <<'EOF'
 import json, os, sys
 path, name, version, url, sha = sys.argv[1:]

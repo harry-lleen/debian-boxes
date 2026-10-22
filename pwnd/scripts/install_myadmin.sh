@@ -14,19 +14,16 @@ echo "START - Installation of phpMyAdmin - "$IP
 
 echo "[1] - Install required packages ...."
 apt-get install $APT_OPT \
-	unzip \
-	openssl \
 	php-mbstring \
 	php-zip \
 	php-gd \
 	php-xml \
 	php-pear \
-	php-cgi \
     >> $LOG_FILE 2>&1
 
 echo "[2] - download files"
-wget -q https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.zip > /dev/null 2>/tmp/install_myadmin.log
-unzip phpMyAdmin-${VERSION}-all-languages.zip -d ${REP} >> /tmp/install_myadmin.log 2>&1
+wget -q https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-all-languages.zip >> $LOG_FILE 2>&1
+unzip phpMyAdmin-${VERSION}-all-languages.zip -d ${REP} >> $LOG_FILE 2>&1
 rm phpMyAdmin-${VERSION}-all-languages.zip
 
 echo "[3] - configuration files  "
@@ -48,8 +45,7 @@ service apache2 restart
 cat <<EOF
 Service installed at http://192.168.56.80/myadmin/
 
-You will need to add a hosts file entry for:
-
+Login:
 username: irdw
 password: network
 
