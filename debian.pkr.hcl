@@ -35,14 +35,30 @@ variable "security_host" {
   default = "security.debian.org"
 }
 
+variable "mirror_dir" {
+  type    = string
+  default = "/debian"
+}
+
+# Kali
+variable "name" {
+  type    = string
+  default = ""
+}
+
+variable "packages" {
+  type    = string
+  default = ""
+}
+
 locals {
   major = split(".", var.debian_version)[0]
-  name  = "debian-${local.major}-arm64"
+  name  = var.name != "" ? var.name : "debian-${local.major}-arm64"
 }
 
 source "virtualbox-iso" "debian" {
   vm_name              = local.name
-  guest_os_type        = "Debian${local.major}_arm64"
+  guest_os_type        = var.name != "" ? "Debian_arm64" : "Debian${local.major}_arm64"
   firmware             = "efi"
   chipset              = "armv8virtual"
   cpus                 = 2
@@ -62,9 +78,9 @@ source "virtualbox-iso" "debian" {
 
   boot_command = [
     "<wait>e<wait><down><down><down><end><left><left><left><left><left><left><left><left><left><left>",
-    " auto=true priority=critical preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+    " auto=true priority=critical locale=en_US.UTF-8 keymap=us preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
     " netcfg/get_hostname=${local.name} netcfg/get_domain=localdomain",
-    " mirror/http/hostname=${var.mirror} apt-setup/security_host=${var.security_host}<f10>"
+    " mirror/http/hostname=${var.mirror} mirror/http/directory=${var.mirror_dir} apt-setup/security_host=${var.security_host}<f10>"
   ]
 
   vboxmanage = [
@@ -96,8 +112,9 @@ build {
   }
 
   provisioner "shell" {
-    execute_command = "sudo -E sh -eux '{{ .Path }}'"
-    scripts         = ["scripts/provision.sh", "scripts/minimize.sh"]
+    execute_command  = "sudo {{ .Vars }} sh -eux '{{ .Path }}'"
+    environment_vars = ["PACKAGES=${var.packages}"]
+    scripts          = ["scripts/provision.sh", "scripts/minimize.sh"]
   }
 
   post-processor "vagrant" {

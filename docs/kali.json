@@ -1,0 +1,20 @@
+{
+  "name": "harry-lleen/kali",
+  "description": "Kali arm64 pour VirtualBox (Apple Silicon)",
+  "versions": [
+    {
+      "version": "2026.3",
+      "status": "active",
+      "providers": [
+        {
+          "name": "virtualbox",
+          "architecture": "arm64",
+          "default_architecture": true,
+          "url": "https://github.com/harry-lleen/debian-boxes/releases/download/kali-v2026.3/kali-arm64-2026.3.virtualbox.box",
+          "checksum_type": "sha256",
+          "checksum": "abd78f91f2bde45b8c05b43da9aae73f8f3ad0da33eac49cf9940b53ce9c3f52"
+        }
+      ]
+    }
+  ]
+}

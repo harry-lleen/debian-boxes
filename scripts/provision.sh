@@ -21,6 +21,9 @@ grub-install --target=arm64-efi --efi-directory=/boot/efi --removable
 # Pas de mises à jour apt automatiques (elles verrouillent apt).
 systemctl disable --now apt-daily.timer apt-daily-upgrade.timer
 
+# Paquets Kali.
+[ -z "${PACKAGES:-}" ] || apt-get install -y $PACKAGES
+
 # Guest Additions VirtualBox.
 apt-get install -y build-essential dkms linux-headers-"$(uname -r)"
 mkdir -p /mnt/vbox
@@ -31,7 +34,8 @@ modinfo vboxsf >/dev/null 2>&1 || KCFLAGS=-DTASK_SIZE_MAX=TASK_SIZE_64 /sbin/rcv
 umount /mnt/vbox
 rm -rf /mnt/vbox /tmp/VBoxGuestAdditions.iso
 modinfo vboxsf
-apt-get purge -y build-essential dkms gcc make dpkg-dev linux-headers-"$(uname -r)"
+# auto et pas purge : autoremove les retire seulement si rien n'en dépend
+apt-mark auto build-essential dkms gcc make dpkg-dev linux-headers-"$(uname -r)"
 
 dpkg-query -Wf '${Package}\n' 'linux-image-[0-9]*' | grep -v "$(uname -r)" | xargs -r apt-get purge -y
 
@@ -56,7 +60,7 @@ rm -f /etc/ssh/ssh_host_*
 apt-get -y autoremove --purge
 apt-get -y clean
 rm -rf /var/lib/apt/lists/* /var/cache/* /tmp/* /var/tmp/* /var/log/vboxadd*
-find /var/log -type f -exec truncate -s 0 {} +
+find /var/log -type f -exec truncate -s 0 {} + || true  # Kali : le log PostgreSQL refuse le truncate
 truncate -s 0 /etc/machine-id
 rm -f /var/lib/dbus/machine-id /var/lib/systemd/random-seed /var/lib/dhcp/*
 rm -f /root/.bash_history /home/vagrant/.bash_history

@@ -1,0 +1,8 @@
+name           = "kali-arm64"
+debian_version = "2026.3"
+iso_url        = "https://cdimage.kali.org/kali-2026.3/kali-linux-2026.3-installer-netinst-arm64.iso"
+iso_checksum   = "sha256:a986c7fe0f8e887a77e7ea9f868da88eae04e7ac780ae75e6b702f243b63bf8d"
+mirror         = "http.kali.org"
+mirror_dir     = "/kali"
+security_host  = ""
+packages       = "kali-linux-core kali-tools-top10"
